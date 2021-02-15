@@ -1,0 +1,162 @@
+﻿<Window x:Class="EmployeeManagementV2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="EmployeeManagement" Height="500" Width="1000"
+        Loaded="Window_Loaded">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="73*"/>
+            <ColumnDefinition Width="919*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="99*"/>
+                <ColumnDefinition Width="397*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Offset="0.00" Color="LightSlateGray" />
+                    <GradientStop Offset="0.50" Color="LightGray" />
+                    <GradientStop Offset="1.00" Color="MintCream" />
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <DataGrid AutoGenerateColumns="False" Height="450" HorizontalAlignment="Center" Margin="-1,39,-1,-20"
+                  Name="dgEmployeeMgmt" VerticalAlignment="Center" Width="994" ColumnWidth="*"
+                  RowEditEnding="dgEmployeeMgmt_RowEditEnding" 
+                  CellEditEnding="dgEmployeeMgmt_CellEditEnding"
+                  SelectionChanged="dgEmployeeMgmt_SelectionChanged"
+                  GridLinesVisibility="All" 
+                  RenderTransformOrigin="0.5,0.5"
+                  Background="LightGray" 
+                  RowBackground="White" 
+                  AlternatingRowBackground="Beige"   
+                  BorderBrush="Gray" 
+                  BorderThickness="5"  
+                  SelectionMode="Extended" Grid.ColumnSpan="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id,Mode=TwoWay}" Header="Id" IsReadOnly="True" x:Name="colId"/>
+                    <DataGridTextColumn Binding="{Binding Name,Mode=TwoWay}" Header="Name" IsReadOnly="True" x:Name="colName" Width="150"/>
+                    <DataGridTextColumn Binding="{Binding Email,Mode=TwoWay}" Header="Email" IsReadOnly="True" x:Name="colEmail" Width="250"/>
+                    <DataGridTextColumn Binding="{Binding Gender,Mode=TwoWay}" Header="Gender" IsReadOnly="True" x:Name="colGender"/>
+                    <DataGridTextColumn Binding="{Binding Status,Mode=TwoWay}" Header="Status" IsReadOnly="True" x:Name="colStatus"/>
+                    <DataGridTextColumn Binding="{Binding Created_At,Mode=TwoWay}" Header="Created On" IsReadOnly="True" x:Name="colCreatedAt" Width="150"/>
+                    <DataGridTextColumn Binding="{Binding Updated_At,Mode=TwoWay}" Header="Updated On" IsReadOnly="True" x:Name="colUpdatedAt" Width="150"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Update" x:Name="btnUpdate" Click="btnUpdate_Click"></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete" x:Name="btnDelete" Click="btnDelete_Click"></Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+            <Grid Margin="0,58,10,0" Grid.ColumnSpan="2" >
+                <StackPanel Orientation="Horizontal" 
+            HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                    <Button Height="23" HorizontalAlignment="Left"  
+                Name="btnFirst" VerticalAlignment="Bottom" 
+                Width="40" Content="&lt;&lt;" 
+                Click="btnFirst_Click" Opacity="0.75"/>
+                    <Button Height="23"  VerticalAlignment="Bottom" 
+                Name="btnPrev" Width="40" Click="btnPrev_Click" 
+                Opacity="0.75" Content="&lt;"/>
+                    <TextBox x:Name="txtPage" 
+                HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Left" Height="26" 
+                Width="100" VerticalContentAlignment="Center" 
+                VerticalAlignment="Bottom" IsReadOnly="True" Text="{Binding Path=Page}"/>
+
+                    <Button Height="23" HorizontalAlignment="Right" 
+                Name="btnNext" VerticalAlignment="Bottom" 
+                Width="40" Content="&gt;" 
+                Click="btnNext_Click" Opacity="0.75"/>
+                    <Button Height="23" HorizontalAlignment="Right"  
+                VerticalAlignment="Bottom" Width="40" 
+                Name="btnLast" Click="btnLast_Click" 
+                Opacity="0.75" Content="&gt;&gt;"/>
+                    <TextBox x:Name="txtTotalPage" 
+                HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Left" Height="26" 
+                Width="100" VerticalContentAlignment="Center" 
+                VerticalAlignment="Bottom" IsReadOnly="True" Visibility="Hidden" Text="{Binding Path=TotalPages}"/>
+                </StackPanel>
+
+
+            </Grid>
+
+
+        </Grid>
+        <Grid Margin="700,350,0,0" Grid.ColumnSpan="4" >
+            <Label HorizontalAlignment="Left" Content="Name:" Margin="-218,459,0,-365" VerticalAlignment="Top" Width="80" Name="lblName" Height="25"/>
+            <TextBox Margin="-170,459,0,-365" VerticalAlignment="Top" Name="txtName" Height="25" HorizontalAlignment="Left" Width="80"/>
+
+            <Label HorizontalAlignment="Left" Content="Email:" Margin="-48,459,0,-365" VerticalAlignment="Top" Width="80" Name="lblEmail" Height="25"/>
+            <TextBox HorizontalAlignment="Left" Margin="1,459,0,-365" VerticalAlignment="Top" Width="80" Name="txtEmail" Height="25"/>
+
+            <Label HorizontalAlignment="Left" Content="Gender:" Margin="132,459,0,-365" VerticalAlignment="Top" Width="80" Name="lblGender" Height="25"/>
+            <ComboBox HorizontalAlignment="Left" Margin="190,459,0,-365" VerticalAlignment="Top" Width="80" Name="comboGender" Height="25"/>
+
+            <Label HorizontalAlignment="Left" Content="Status:" Margin="302,459,0,-365" VerticalAlignment="Top" Width="80" Name="lblStatus" Height="25"/>
+            <ComboBox HorizontalAlignment="Left" Margin="344,459,0,-365" VerticalAlignment="Top" Width="80" Name="comboStatus" Height="25" />
+
+            <Button Content="Add" HorizontalAlignment="Left" Margin="446,459,-34,-365" VerticalAlignment="Top" Width="80" Name="btnAdd" Click="btnAdd_Click" Height="25"/>
+
+        </Grid>
+        <Grid Margin="560,365,0,170" Grid.ColumnSpan="2" >
+            <Button Content="Export" HorizontalAlignment="Left" Margin="-96,-75,0,0" VerticalAlignment="Top" Width="80" Name="btnExport" Click="btnExport_Click" Height="25"/>
+            <TextBox HorizontalAlignment="Left" Margin="20,-75,0,0" VerticalAlignment="Top" Width="80" Name="txtSearch" Height="25" MaxLength="100"/>
+            <Button Content="Search" HorizontalAlignment="Left" Margin="100,-75,0,0" VerticalAlignment="Top" Width="80" Name="btnSearch" Click="btnSearch_Click" Height="25"/>
+        </Grid>
+    </Grid>
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#373737" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="4" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightGray" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="LightGray" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+</Window>
+
+
+
+       
